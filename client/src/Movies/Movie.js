@@ -31,6 +31,10 @@ export default class Movie extends React.Component {
 		addToSavedList(this.state.movie);
 	};
 
+	editMovie = () => {
+		alert('yay!');
+	};
+
 	render() {
 		if (!this.state.movie) {
 			return <div>Loading movie information...</div>;
@@ -42,7 +46,9 @@ export default class Movie extends React.Component {
 				<div className="save-button" onClick={this.saveMovie}>
 					Save
 				</div>
-				<div className="edit-button">Edit</div>
+				<div className="edit-button" onClick={this.editMovie}>
+					Edit
+				</div>
 			</div>
 		);
 	}
