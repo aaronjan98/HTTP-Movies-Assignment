@@ -31,8 +31,9 @@ export default class Movie extends React.Component {
 		addToSavedList(this.state.movie);
 	};
 
-	editMovie = () => {
-		alert('yay!');
+	editMovie = (e) => {
+		e.preventDefault();
+		this.props.history.push(`/update-movie/${this.props.match.params.id}`);
 	};
 
 	render() {
