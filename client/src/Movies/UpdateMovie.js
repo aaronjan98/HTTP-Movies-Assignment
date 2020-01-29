@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 const initialMovie = {
 	id: Date.now(),
@@ -10,6 +11,18 @@ const initialMovie = {
 
 const UpdateMovie = () => {
 	const [ movie, setMovie ] = useState(initialMovie);
+	const { id } = useParams();
+
+	useEffect(
+		() => {
+			const movieToUpdate = props.items.find((thing) => `${thing.id}` === id);
+
+			if (movieToUpdate) {
+				setMovie(movieToUpdate);
+			}
+		},
+		[ props.items, id ]
+	);
 
 	const changeHandler = (ev) => {
 		ev.persist();
@@ -55,7 +68,7 @@ const UpdateMovie = () => {
 				<input type="string" name="stars" onChange={changeHandler} placeholder="Stars" value={movie.stars} />
 				<div className="baseline" />
 
-				<button>Update Movie</button>
+				<button className="update-button">Update Movie</button>
 			</form>
 		</div>
 	);

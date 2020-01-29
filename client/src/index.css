@@ -81,6 +81,14 @@ body {
 	background-color: lightskyblue;
 }
 
+.update-button {
+	padding: 5px 10px;
+	background-color: lightskyblue;
+	margin: 10px 0;
+	border: 1px solid grey;
+	font-size: 1.1rem;
+}
+
 .movie-warning {
 	color: red;
 	text-align: center;
