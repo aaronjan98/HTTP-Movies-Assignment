@@ -9,7 +9,7 @@ const initialMovie = {
 	stars: []
 };
 
-const UpdateMovie = () => {
+const UpdateMovie = props => {
 	const [ movie, setMovie ] = useState(initialMovie);
 	const { id } = useParams();
 
