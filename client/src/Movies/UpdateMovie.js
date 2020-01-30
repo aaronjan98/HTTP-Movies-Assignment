@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const initialMovie = {
 	id: Date.now(),
@@ -11,17 +12,19 @@ const initialMovie = {
 
 const UpdateMovie = props => {
 	const [ movie, setMovie ] = useState(initialMovie);
-	const { id } = useParams();
+    const { id } = useParams();
+    
+ console.log('params id:', id);
 
 	useEffect(
 		() => {
-			const movieToUpdate = props.items.find((thing) => `${thing.id}` === id);
+			const movieToUpdate = props.movies.find((thing) => `${thing.id}` === id);
 
 			if (movieToUpdate) {
 				setMovie(movieToUpdate);
 			}
 		},
-		[ props.items, id ]
+		[ props.movies, id ]
 	);
 
 	const changeHandler = (ev) => {
@@ -35,14 +38,28 @@ const UpdateMovie = props => {
 			...movie,
 			[ev.target.name]: value
 		});
-	};
+    };
+    
+    console.log('movie:', movie, props.movies);
 
 	const handleSubmit = (e) => {
-		e.preventDefault();
+        e.preventDefault();
+        axios
+        .put(`http://localhost:5000/api/movies/${id}`, movie)
+        .then(res => {
+            axios.get("http://localhost:5000/api/movies")
+            .then(res => {
+                props.setMovies( res.data );
+                props.history.push(`/`);
+            })
+            .catch(err => console.log(err.response));
+        })
+        .catch(err => console.log(err));
 	};
 
 	return (
 		<div>
+            <h1 style={{textAlign: "center"}}>Update the Movie!</h1>
 			<form onSubmit={handleSubmit}>
 				<input type="text" name="title" onChange={changeHandler} placeholder="Title" value={movie.title} />
 				<div className="baseline" />
